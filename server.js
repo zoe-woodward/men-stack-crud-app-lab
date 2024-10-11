@@ -19,6 +19,13 @@ app.get("/", async (req, res) => {
 res.render("index.ejs");
 });
 
+
+app.get("/books", async (req, res) => {
+    const allBooks = await Book.find();
+    res.render("books/index.ejs", { books: allBooks });
+  });
+  
+  
 app.get("/books/new", (req, res) => {
 res.render("books/new.ejs");
 });
@@ -30,7 +37,7 @@ app.post("/books", async (req, res) => {
         req.body.reccomend  = false;
       }
       await Book.create(req.body);
-      res.redirect("/books/new");
+      res.redirect("/books");
     });
 
 
