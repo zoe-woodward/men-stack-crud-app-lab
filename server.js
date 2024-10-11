@@ -22,6 +22,7 @@ res.render("index.ejs");
 
 app.get("/books", async (req, res) => {
     const allBooks = await Book.find();
+    console.log(allBooks);
     res.render("books/index.ejs", { books: allBooks });
   });
   
@@ -29,6 +30,12 @@ app.get("/books", async (req, res) => {
 app.get("/books/new", (req, res) => {
 res.render("books/new.ejs");
 });
+
+app.get("/books/:bookId", async (req, res) => {
+    const foundBook = await Book.findById(req.params.bookId);
+    res.render("books/show.ejs", { book: foundBook });
+  });
+  
 
 app.post("/books", async (req, res) => {
     if (req.body.reccomend === "on") {
@@ -39,6 +46,7 @@ app.post("/books", async (req, res) => {
       await Book.create(req.body);
       res.redirect("/books");
     });
+
 
 
 app.listen(3000, () => {
