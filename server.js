@@ -10,17 +10,28 @@ mongoose.connection.on("connected", () => {
     console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
   });
 
-  const Book = require("./models/book.js");
+const Book = require("./models/book.js");
+app.use(express.urlencoded({ extended: false }));
+
 
 
 app.get("/", async (req, res) => {
-    res.render("index.ejs");
-  });
+res.render("index.ejs");
+});
 
-  app.get("/books/new", (req, res) => {
-    res.render("books/new.ejs");
-  });
+app.get("/books/new", (req, res) => {
+res.render("books/new.ejs");
+});
 
+app.post("/books", async (req, res) => {
+    if (req.body.reccomend === "on") {
+        req.body.reccomend  = true;
+      } else {
+        req.body.reccomend  = false;
+      }
+      await Book.create(req.body);
+      res.redirect("/books/new");
+    });
 
 
 app.listen(3000, () => {
