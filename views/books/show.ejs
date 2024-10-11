@@ -13,6 +13,9 @@
       <% } else { %>
         <p>There are probably books you would enjoy more!</p>
       <% } %>
+      <form action="/books/<%=book._id%>?_method=DELETE" method="POST">
+        <button type="submit">Delete <%= book.title %></button>
+      </form>
       <a href="/books/">Back to Books</a>
   </body>
 </html>
