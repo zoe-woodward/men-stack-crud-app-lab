@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const bookSchema = new mongoose.Schema({
     title: String,
-    summary: String,
-    score: Number
+    comments: String,
+    reccommend: Boolean,
   });
 
 const Book = mongoose.model("Book", bookSchema); 
