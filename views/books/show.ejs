@@ -8,7 +8,7 @@
   <body>
     <h1><%= book.title %></h1>
     <p><%= book.comments %></p>
-    <% if (book.reccomend) { %>
+    <% if (book.recommend) { %>
         <p>We think you would enjoy reading this!</p>
       <% } else { %>
         <p>There are probably books you would enjoy more!</p>
@@ -16,6 +16,7 @@
       <form action="/books/<%=book._id%>?_method=DELETE" method="POST">
         <button type="submit">Delete <%= book.title %></button>
       </form>
+      <a href="/books/<%= book._id %>/edit">Edit <%= book.title %></a>
       <a href="/books/">Back to Books</a>
   </body>
 </html>

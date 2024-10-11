@@ -26,7 +26,7 @@ res.render("index.ejs");
 
 app.get("/books", async (req, res) => {
     const allBooks = await Book.find();
-    console.log(allBooks);
+    console.log(Book.recommend);
     res.render("books/index.ejs", { books: allBooks });
   });
   
@@ -42,10 +42,10 @@ app.get("/books/:bookId", async (req, res) => {
   
 
 app.post("/books", async (req, res) => {
-    if (req.body.reccomend === "on") {
-        req.body.reccomend  = true;
+    if (req.body.recommend === "on") {
+        req.body.recommend  = true;
       } else {
-        req.body.reccomend  = false;
+        req.body.recommend  = false;
       }
       await Book.create(req.body);
       res.redirect("/books");
@@ -56,6 +56,22 @@ app.delete("/books/:bookId", async (req, res) => {
   res.redirect("/books");
     });
 
+app.get("/books/:bookId/edit", async (req, res) => {
+    const foundBook = await Book.findById(req.params.bookId);
+    res.render("books/edit.ejs", {
+        book: foundBook,
+      });
+    });
+
+app.put("/books/:bookId", async (req, res) => {
+    if (req.body.recommend === "on") {
+    req.body.recommend = true;
+    } else {
+    req.body.recommend = false;
+    }
+    await Book.findByIdAndUpdate(req.params.bookId, req.body);
+    res.redirect(`/books/${req.params.bookId}`);
+    });
 
 app.listen(3000, () => {
   console.log("Listening on port 3000");
